@@ -31,7 +31,7 @@ jobs:
           const CONFIG = {
               SUPABASE_URL: "${{ secrets.SUPABASE_URL }}",
               SUPABASE_KEY: "${{ secrets.SUPABASE_KEY }}",
-              TABLE_NAME: "thematic_sessions_submissions",
+              TABLE_NAME: "thematic_session_submissions_2026",
           };
           EOF
 

@@ -79,6 +79,6 @@ function downloadXlsx(rows) {
   );
   XLSX.writeFile(
     wb,
-    "thematic_sessions_submissions.xlsx",
+    "thematic_session_submissions_2026.xlsx",
   );
 }
