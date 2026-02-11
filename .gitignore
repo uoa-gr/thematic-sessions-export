@@ -1,0 +1,8 @@
+# Secrets
+js/config.js
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
