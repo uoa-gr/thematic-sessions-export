@@ -5,6 +5,88 @@
 // ---------------------------------------------------------------------------
 
 /**
+ * Open the sidebar with full cell content.
+ *
+ * @param {string} title — column label to show in the sidebar header
+ * @param {string} content — full cell text
+ */
+function openSidebar(title, content) {
+  var overlay = document.getElementById(
+    "sidebarOverlay",
+  );
+  var sidebar =
+    document.getElementById("sidebar");
+  var sidebarTitle = document.getElementById(
+    "sidebarTitle",
+  );
+  var sidebarBody = document.getElementById(
+    "sidebarBody",
+  );
+
+  if (!overlay || !sidebar) return;
+
+  sidebarTitle.textContent = title;
+  sidebarBody.textContent = content;
+
+  overlay.classList.add("open");
+  sidebar.classList.add("open");
+}
+
+/**
+ * Close the sidebar.
+ */
+function closeSidebar() {
+  var overlay = document.getElementById(
+    "sidebarOverlay",
+  );
+  var sidebar =
+    document.getElementById("sidebar");
+
+  if (overlay) overlay.classList.remove("open");
+  if (sidebar) sidebar.classList.remove("open");
+}
+
+// Wire up sidebar close buttons once DOM is ready
+(function () {
+  function init() {
+    var closeBtn = document.getElementById(
+      "sidebarClose",
+    );
+    var overlay = document.getElementById(
+      "sidebarOverlay",
+    );
+
+    if (closeBtn)
+      closeBtn.addEventListener(
+        "click",
+        closeSidebar,
+      );
+    if (overlay)
+      overlay.addEventListener(
+        "click",
+        closeSidebar,
+      );
+
+    // Close on Escape key
+    document.addEventListener(
+      "keydown",
+      function (e) {
+        if (e.key === "Escape") closeSidebar();
+      },
+    );
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      init,
+    );
+  } else {
+    init();
+  }
+})();
+
+/**
  * Render the given rows into the #tableWrap container.
  * If the array is empty an "empty-state" placeholder is shown instead.
  *
@@ -72,9 +154,17 @@ function renderTable(rows) {
         var div = document.createElement("div");
         div.className = "cell-clamp";
         div.textContent = val;
-        if (val.length > 80) {
-          td.title = val;
-        }
+
+        // Click to open sidebar with full content
+        (function (label, fullText) {
+          div.addEventListener(
+            "click",
+            function () {
+              openSidebar(label, fullText);
+            },
+          );
+        })(col.label, val);
+
         td.appendChild(div);
       } else {
         td.textContent = val;
