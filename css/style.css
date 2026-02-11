@@ -155,6 +155,30 @@ tbody td {
     -webkit-box-orient: vertical;
     line-height: 1.5em;
     max-height: 4.5em;
+    position: relative;
+    cursor: pointer;
+}
+
+td:hover .cell-clamp {
+    display: block;
+    -webkit-line-clamp: unset;
+    max-height: none;
+    overflow: visible;
+    position: absolute;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    min-width: 100%;
+    width: max-content;
+    max-width: 400px;
+    background: #fffde7;
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+td:has(.cell-clamp) {
+    position: relative;
 }
 
 .badge {
