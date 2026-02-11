@@ -79,10 +79,31 @@
         );
       }
 
+      console.log(
+        "[DEBUG] Fetching from table:",
+        CONFIG.TABLE_NAME,
+      );
+
       var result = await supabaseClient
         .from(CONFIG.TABLE_NAME)
         .select("*")
         .order("created_at", { ascending: true });
+
+      console.log(
+        "[DEBUG] Supabase raw response:",
+        result,
+      );
+      console.log(
+        "[DEBUG] status:",
+        result.status,
+        "statusText:",
+        result.statusText,
+      );
+      console.log(
+        "[DEBUG] data length:",
+        result.data ? result.data.length : "null",
+      );
+      console.log("[DEBUG] error:", result.error);
 
       if (result.error) {
         throw result.error;
