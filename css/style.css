@@ -149,27 +149,10 @@ tbody td {
 td.wrap-cell {
     white-space: normal;
     word-break: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
     overflow: hidden;
-    max-height: 4.8em;
-    line-height: 1.6em;
-    cursor: default;
-    position: relative;
-}
-
-td.wrap-cell:hover {
-    overflow: visible;
-    display: block;
-    -webkit-line-clamp: unset;
-    max-height: none;
-    background: #fffde7;
-    position: relative;
-    z-index: 10;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    padding: 8px 12px;
+    text-overflow: ellipsis;
+    max-height: 4.5em;
+    line-height: 1.5em;
 }
 
 .badge {
