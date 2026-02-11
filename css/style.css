@@ -146,13 +146,15 @@ tbody td {
     text-overflow: ellipsis;
 }
 
-td.wrap-cell {
+.cell-clamp {
     white-space: normal;
     word-break: break-word;
     overflow: hidden;
-    text-overflow: ellipsis;
-    max-height: 4.5em;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     line-height: 1.5em;
+    max-height: 4.5em;
 }
 
 .badge {

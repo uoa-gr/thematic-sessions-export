@@ -68,16 +68,16 @@ function renderTable(rows) {
         span.className = "badge badge-" + val;
         span.textContent = val;
         td.appendChild(span);
-      } else {
-        td.textContent = val;
-      }
-
-      // Allow long-text columns to wrap; add title for native tooltip
-      if (col.wrap) {
-        td.classList.add("wrap-cell");
+      } else if (col.wrap) {
+        var div = document.createElement("div");
+        div.className = "cell-clamp";
+        div.textContent = val;
         if (val.length > 80) {
           td.title = val;
         }
+        td.appendChild(div);
+      } else {
+        td.textContent = val;
       }
 
       tr.appendChild(td);
