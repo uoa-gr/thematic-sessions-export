@@ -71,6 +71,7 @@ function transformAbstract(raw) {
     // co_authors is free-form text; could contain multiple authors
     co_authors:    raw.co_authors    || "",
     abstract_text: raw.abstract_text || "",
+    notes:         raw.notes         || "",
     // UI display: badge
     has_file:      raw.file_path ? fileLabel(raw.file_path) : "",
     // Excel / ZIP: raw storage path

@@ -42,6 +42,7 @@ var ABSTRACT_COLUMNS = [
   { key: "session",       label: "Session",       wrap: true },
   { key: "co_authors",    label: "Co-Authors",    wrap: true },
   { key: "abstract_text", label: "Abstract Text", wrap: true },
+  { key: "notes",         label: "Notes",         wrap: true },
 ];
 
 // ── Payment Receipts ──────────────────────────────────────────────────────────
