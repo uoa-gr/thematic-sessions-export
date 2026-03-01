@@ -8,7 +8,6 @@
   <!-- External libs -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
   <!-- App styles -->
   <link rel="stylesheet" href="css/style.css" />
@@ -18,22 +17,14 @@
     <h1>Conference Submissions</h1>
     <a href="thematic-sessions.html" class="nav-link">← Thematic Sessions</a>
     <div class="controls">
-      <button id="syncBtn" class="sync-btn">Sync All</button>
-      <button id="downloadBtn" class="download-zip-btn" disabled>Download ZIP</button>
+      <button id="syncBtn" class="sync-btn">Sync</button>
+      <button id="downloadBtn" class="download-zip-btn" disabled>Export Excel</button>
     </div>
   </header>
 
-  <!-- Tab bar -->
-  <div class="tabs" id="tabBar">
-    <button class="tab-btn active" data-tab="registrations">
-      Registrations (<span id="regCount">0</span>)
-    </button>
-    <button class="tab-btn" data-tab="abstracts">
-      Abstracts (<span id="absCount">0</span>)
-    </button>
-    <button class="tab-btn" data-tab="payments">
-      Payment Receipts (<span id="payCount">0</span>)
-    </button>
+  <!-- Count bar -->
+  <div class="tabs">
+    <span class="tab-btn active">Abstracts (<span id="absCount">0</span>)</span>
   </div>
 
   <div id="errorBanner" class="error-banner"></div>
@@ -61,7 +52,6 @@
   <script src="js/reg-transform.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/reg-renderer.js"></script>
-  <script src="js/zip-export.js"></script>
   <script src="js/reg-app.js"></script>
 </body>
 </html>
