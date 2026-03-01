@@ -118,10 +118,36 @@ function renderRegTable(rows, cols) {
 
       } else if (col.key === "has_file") {
         if (val !== "") {
-          // File indicator badge — shows filename stub
+          // Clickable file badge — generates a signed URL and opens the file
           var fspan = document.createElement("span");
-          fspan.className   = "badge badge-file";
+          fspan.className   = "badge badge-file badge-file-link";
           fspan.textContent = val;
+          fspan.title       = "Click to open file";
+
+          (function (badge, bucket, filePath) {
+            badge.addEventListener("click", async function () {
+              var prev = badge.textContent;
+              badge.textContent = "Loading…";
+              badge.style.opacity = "0.6";
+              badge.style.cursor  = "wait";
+
+              try {
+                var result = await supabaseClient.storage
+                  .from(bucket)
+                  .createSignedUrl(filePath, 3600);
+
+                if (result.error) throw result.error;
+                window.open(result.data.signedUrl, "_blank", "noopener");
+              } catch (err) {
+                alert("Could not open file: " + (err.message || err));
+              } finally {
+                badge.textContent   = prev;
+                badge.style.opacity = "";
+                badge.style.cursor  = "";
+              }
+            });
+          })(fspan, col.bucket, row._file_path);
+
           td.appendChild(fspan);
         }
 
