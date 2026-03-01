@@ -91,26 +91,39 @@ async function fetchStorageFile(bucket, filePath) {
 }
 
 /**
- * Derive a short, filesystem-safe filename from an email address and the
- * original storage path, keeping the original file extension.
+ * Extract just the basename (last segment) from a storage path.
  *
- * Examples:
- *   "john.doe@example.com", "abstracts/uuid-my thesis.pdf"
- *   → "john.doe_at_example.com_my thesis.pdf"
+ * @param {string} filePath — raw storage path
+ * @returns {string}  e.g. "uuid-my_abstract.pdf"
+ */
+function storageBasename(filePath) {
+  var parts = filePath.replace(/\\/g, "/").split("/");
+  return parts[parts.length - 1] || filePath;
+}
+
+/**
+ * Sanitise an email address for use as a filesystem folder/file name.
+ * Keeps letters, digits, dots, hyphens; replaces @ with _at_.
+ *
+ * @param {string} email
+ * @returns {string}  e.g. "john.doe_at_example.com"
+ */
+function safeEmail(email) {
+  return (email || "unknown")
+    .replace(/@/g, "_at_")
+    .replace(/[^a-zA-Z0-9._+-]/g, "_");
+}
+
+/**
+ * Derive a flat filename for abstracts: email + original basename.
+ * e.g. "john.doe_at_example.com_uuid-my_abstract.pdf"
  *
  * @param {string} email
  * @param {string} filePath — raw storage path
  * @returns {string}
  */
 function zipFilename(email, filePath) {
-  // Take the last segment of the path
-  var parts    = filePath.replace(/\\/g, "/").split("/");
-  var basename = parts[parts.length - 1] || filePath;
-
-  // Sanitise email for use in a filename
-  var safeEmail = (email || "unknown").replace(/@/g, "_at_").replace(/[^a-zA-Z0-9._@+-]/g, "_");
-
-  return safeEmail + "_" + basename;
+  return safeEmail(email) + "_" + storageBasename(filePath);
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
@@ -176,22 +189,22 @@ async function downloadZip(registrations, abstracts, payments, onStatus) {
     }
   }
 
-  // Payment receipt files
+  // Payment receipt files — one subfolder per user email
   var payWithFiles = payments.filter(function (row) { return row._file_path; });
   if (payWithFiles.length > 0) {
-    var payFolder = zip.folder("payment_receipts");
     for (var j = 0; j < payWithFiles.length; j++) {
-      var pay      = payWithFiles[j];
-      var pFilename = zipFilename(pay.email, pay._file_path);
+      var pay       = payWithFiles[j];
+      var userFolder = zip.folder("payment_receipts/" + safeEmail(pay.email));
+      var pFilename  = storageBasename(pay._file_path);
       status(
         "Downloading receipt file " + (j + 1) + " / " + payWithFiles.length +
-        " (" + pFilename + ")…"
+        " (" + safeEmail(pay.email) + "/" + pFilename + ")…"
       );
       var pBuffer = await fetchStorageFile("payment-receipts", pay._file_path);
       if (pBuffer) {
-        payFolder.file(pFilename, pBuffer);
+        userFolder.file(pFilename, pBuffer);
       } else {
-        failedFiles.push("payment_receipts/" + pay._file_path);
+        failedFiles.push("payment_receipts/" + safeEmail(pay.email) + "/" + pay._file_path);
       }
     }
   }
