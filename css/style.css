@@ -300,6 +300,83 @@ tbody td {
     display: none;
 }
 
+/* ─────────────── Inter-page nav link ─────────────── */
+.nav-link {
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 0;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+/* ─────────────── Tabs ─────────────── */
+.tabs {
+    max-width: 1600px;
+    margin: 0 auto 16px;
+    display: flex;
+    gap: 2px;
+    border-bottom: 2px solid var(--border);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    padding: 10px 20px;
+    margin-bottom: -2px;
+    color: var(--muted);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+/* ─────────────── ZIP download button ─────────────── */
+button.download-zip-btn {
+    background: #7c3aed;
+    color: #fff;
+}
+
+button.download-zip-btn:hover:not(:disabled) {
+    background: #6d28d9;
+}
+
+/* ─────────────── File badge ─────────────── */
+.badge-file {
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: 0.72rem;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* ─────────────── Payment pending badge ─────────────── */
+.badge-pending-pay {
+    background: #fef9c3;
+    color: #713f12;
+}
+
 /* ─────────────── Responsive ─────────────── */
 @media (max-width: 900px) {
     header {
