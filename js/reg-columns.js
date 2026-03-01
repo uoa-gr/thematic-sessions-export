@@ -42,9 +42,6 @@ var ABSTRACT_COLUMNS = [
   { key: "session",       label: "Session",       wrap: true },
   { key: "co_authors",    label: "Co-Authors",    wrap: true },
   { key: "abstract_text", label: "Abstract Text", wrap: true },
-  // UI: clickable badge → signed URL; Excel: raw storage path
-  { key: "has_file",   label: "File", uiOnly: true,   bucket: "abstracts" },
-  { key: "_file_path", label: "File Path (ZIP)", excelOnly: true },
 ];
 
 // ── Payment Receipts ──────────────────────────────────────────────────────────
